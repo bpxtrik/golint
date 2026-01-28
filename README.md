@@ -96,9 +96,21 @@ The linting will primarily be done via CLI.
 ## 5. Expanding for Thesis Work
 
 The thesis extension of this project will focus on rules and mistakes from the popular book *100 Go Mistakes and How to Avoid Them* by Teiva Harsanyi.
+The following rules will be designed and implemented from the book:
+`#1 Unintended variable shadowing` - Focuses on preventing variable shadowing, especially when redeclaring variable with the short assignment operator (:=). Which leads to compiled code, but variables are nil
+`#8 any says nothing` - any similarly to TypeScript allows to skip static type checking, which is for a statically typed language really bad. Functions that accept/return any data should be refactored into concrete type implementation.
+`#9 Being confused about when to use generics` - Implementation will focus on one use case, that is when calling a method of the type argument, meaning the linter will warn to swap out generic to a concrete type argument.
+`#10 Not being aware of the possible problem with type embedding` - Will warn about specific use case - when a mutex is embedded - to avoid mutex accessibility from the client
+`#13 Creating utility packages` - Warns about commonly used package names that does not give information about the code they contain - utils, shared, common, etc.
+`#14 Ignoring package name collisions` - Prevent any type of package name collision with variable name (in any scope)
+`#18 Neglecting integer overflows` - Tries to find and warn about potential integer overflows from source code
+`#21 Inefficient slice initilization` - Enforces to provide length and capacity at slice initilization
+`#22 Being confused about nil vs. empty slices` - Will recommend to change []string{} to []string initilization
+`#23 Not properly chekcing if a slice is empty` - Instead of slice != nil it recommends to use len(slice) == 0
+`#24 Not making slice copies correctly` - Aligns with rule 21, will check whether the destination slice has atleast the length of source slice during copying
+`#25 Unexpected side effect using slice append` - Since, multiple variables can modify the same backed array in the slice's internal implementation, it will try to prevent this to avoid runtime errors. Will try to make it similarly to Rust's ownership implementation (multiple variables cant have ownership of the same slice)
 
-**Exact rules to be defined later.**
-
+NOTE: Explanation of rule selection/elimination is explained in the RULE-SELECTION-PROCESS.md
 ---
 
 ## References
